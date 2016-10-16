@@ -2,11 +2,7 @@
 from enigma_classes import Rotor
 from enigma_classes import Enigma
 import sys
-######################### TODOOOOOOOOOOOOOOOOOOOOOOOOOO
-## CAMBIAR LOGICA DE MOVIMIENTO
-#rotor2 = Rotor("AJDKSIRUXBLHWTMCQGZNPYFVOE","A",None);
-#rotor3 = Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO","A",rotor2);
-#print(rotor3.cypher("A"));
+###### CONFIGURACIÓN Y CREACIÓN DE LA MÁQUINA
 key = list(sys.argv[1])
 message = str(sys.argv[2])
 rotor3 = Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", key[0],"V")
