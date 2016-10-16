@@ -1,9 +1,10 @@
 class Rotor:
     """Cada rotor tiene una serie de letras (Enigma 1930) y una posicion en la se considera que comienza
     el abecedario del rotor a la hora de comparar con el abecedario normal"""
-    def __init__(self, letters, initChar):
+    def __init__(self, letters, initChar,jumpChar):
         self.letters = list(letters)
         self.setKey(initChar)
+        self.jumpChar = jumpChar
 
     def setKey(self,key):
         self.initialKey = key;
@@ -11,11 +12,11 @@ class Rotor:
 
     def Move(self):
         self.first_index = (self.first_index + 1) % 26
-        return True if self.first_index == 22 else False
+        return True if self.first_index == (Enigma.abc.index(self.jumpChar) + 1) else False
         
     def cypher(self, letter):
         let = self.letters[(Enigma.abc.index(letter) + self.first_index) % 26]
-        return Enigma.abc[(Enigma.abc.index(let)-self.first_index) % 26];
+        return Enigma.abc[(Enigma.abc.index(let)-self.first_index) % 26]
 
     def backCypher(self, letter):
         inv_let = Enigma.abc[(Enigma.abc.index(letter)+self.first_index) % 26]
@@ -37,9 +38,13 @@ class Enigma:
     def move(self):
         i = 0
         move = self.rotors[i].Move()
+        print("Rotor " + str(i) + ", Estoy apuntando a -> " + Enigma.abc[self.rotors[i].first_index])
+        print("Se tiene que mover el rotor " + str(i+1) + " -> " + str(move))
         while(move and i < len(self.rotors)):
             i += 1
             move = self.rotors[i].Move()
+            print("Rotor " + str(i) + ", Estoy apuntando a -> " + Enigma.abc[self.rotors[i].first_index])
+            print("Se ha movido rotor " + str(i) + " Se mueve el siguiente? -> " + str(move))
     
     def setKeys(self, key):
         k = list(key)

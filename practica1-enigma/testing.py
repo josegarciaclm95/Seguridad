@@ -5,9 +5,9 @@ import unittest
 
 class EnigmaTesting(unittest.TestCase):
     def setUp(self):
-        rotor3 = Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "A");
-        rotor2 = Rotor("AJDKSIRUXBLHWTMCQGZNPYFVOE", "A");
-        rotor1 = Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "A");
+        rotor3 = Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "A","V");
+        rotor2 = Rotor("AJDKSIRUXBLHWTMCQGZNPYFVOE", "A","E");
+        rotor1 = Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "A","Q");
         self.machine = Enigma("YRUHQSLDPXNGOKMIEBFZCWVJAT");
         self.machine.appendRotor(rotor3);
         self.machine.appendRotor(rotor2);
@@ -56,7 +56,18 @@ class EnigmaTesting(unittest.TestCase):
         self.machine.setKeys("UIZ")
         self.assertEqual(self.machine.startCypher("UCMDVHYDZKWCSTWVLYYDQNZODKRTIGPSNFHTMDERCUDHSJQFFEBKGJCLTCKVAZOUKBKU"),
                                                     "ESTAMOSAHORAMISMOENSEGURIDADDESISTEMASYESTAMOSAMARTESYMANANAESFIESTA")
-
+    def test49caracteres(self):
+        self.machine.setKeys("AAA")
+        self.assertEqual(self.machine.startCypher("HOLAMUNDOMELLAMOJOSEMARIAYVOYAPROBARENCUARENTAYNU"),
+                            "IIBGHPRUMVNRETAVGRRPAUKUFLJLQXKJLRFISALOXVMHWNBBX");
+    def testMuchosCaracteres(self):
+        self.machine.setKeys("AAA")
+        self.assertEqual(self.machine.startCypher("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
+                            "BDZGOWCXLTKSBTMCDLPBMUQOFXYHCXTGYJFLINHNXSHIUNTH");
+    def testMuchosCaracteres2(self):
+        self.machine.setKeys("TDB")
+        self.assertEqual(self.machine.startCypher("JDLSIEURJNZMAKFLDPOEUERUNVMNXJDHEYHHHHWJXBSKQUERHBSKJNA"),
+                            "PJECCUVYMVMQGVDZPBIWJGHFHZREWMYIHSCCBIDVGJOTJBFKKCHFPYD");
 
 if __name__ == '__main__':
     unittest.main()
