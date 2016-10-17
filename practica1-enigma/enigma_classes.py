@@ -41,10 +41,32 @@ class Enigma:
 	Controla los rotores que tiene asociados y realiza de intermediara en sus comunicaciones
 	"""
 	abc = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
-	def __init__(self, reflector_letters):
+	
+	def __init__(self, reflector_letters, *changed_letters):
 		self.rotors = []
 		self.reflector = list(reflector_letters)
+		self.clavijero = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		if(len(changed_letters) != 0):
+			self.setClavijero(changed_letters)
+
+	def setClavijero(self,pairs_of_letters):
+		"""Funcion que configura el clavijero, recive una tupla de listas, conteniendo cada lista la pareja de elementos
+		a intercambiar en el clavijero.
+		Ej de parametros de entrada
+		([],) - clavijero igual que el abecedario
+		(["AZ"],) - se intercambian la A y la Z
+		(["BU"],["JO"],["DA"],) - se intercambian la B y la U, la J y la O y la D y la A
+		"""
+		if(len(pairs_of_letters[0]) != 0):
+			for pair in pairs_of_letters:
+				x = list(pair[0])
+				self.swap(x[0],x[1])
+	
+	def swap(self,char1,char2):
+		"""Intercambio de caracteres en el clavijero"""
+		ind1, ind2 = Enigma.abc.index(char1),Enigma.abc.index(char2)
+		self.clavijero = self.clavijero[:ind1] + char2 + self.clavijero[ind1+1:]	
+		self.clavijero = self.clavijero[:ind2] + char1 + self.clavijero[ind2+1:] 
 
 	def appendRotor(self, newRotor):
 		"""Anade un nuevo rotor a la lista. El primer rotor es el III, el segundo es el II y el tercero es el I"""
@@ -56,13 +78,9 @@ class Enigma:
 		"""
 		i = 0
 		move = self.rotors[i].Move() or self.rotors[i+1].first_index == Enigma.abc.index(self.rotors[i+1].jumpChar)
-		# print("Rotor " + str(i) + ", Estoy apuntando a -> " + Enigma.abc[self.rotors[i].first_index])
-		# print("Se tiene que mover el rotor " + str(i+1) + " -> " + str(move))
 		while(move and i < len(self.rotors)):
 			i += 1
 			move = self.rotors[i].Move()
-			#print("Rotor " + str(i) + ", Estoy apuntando a -> " + Enigma.abc[self.rotors[i].first_index])
-			#print("Se ha movido rotor " + str(i) + " Se mueve el siguiente? -> " + str(move))
     
 	def setKeys(self, key):
 		"""Se establece la clave de la maquina estableciendose la de cada uno de los rotores.
@@ -72,20 +90,27 @@ class Enigma:
 		k = list(key)
 		for i in range(len(key)):
 			self.rotors[i].setKey(k[i])
-        
+	
+	def inClavijero(self,letter_in):
+		return self.clavijero[Enigma.abc.index(letter_in)]
+	
+	def clavijeroOut(self,letter_out):
+		return Enigma.abc[self.clavijero.index(letter_out)]
+	
 	def startCypher(self,letter_to_cypher):
 		"""Cifrado de cadenas. Pasamos el mensaje a los rotores caracter a caracter y almacenando el resultado en la variable que se 
 		devuelve.
 		"""
 		message_cyphered = ""
 		for x in letter_to_cypher:
-			aux_letter = x
+			aux_letter = self.inClavijero(x)
 			self.move();
 			for r in self.rotors:
 				aux_letter = r.cypher(aux_letter)
 			aux_letter = self.reflector[Enigma.abc.index(aux_letter)]
 			for r in reversed(self.rotors):
 				aux_letter = r.backCypher(aux_letter)
+			aux_letter = self.clavijeroOut(aux_letter)
 			message_cyphered += aux_letter
 		return message_cyphered
 

@@ -47,6 +47,10 @@ class EnigmaTesting(unittest.TestCase):
 
 	def testAAA_longer_sentence(self):
 		self.assertEqual(self.machine.startCypher("HOLAMUNDONOMEPUEDOCREERQUEES"),"IIBGHPRUMHLNLVTNARVVYPKNJZXQ")
+	
+	def testAAA_clavijaAZ(self):
+		self.machine.setClavijero((['AZ'],))
+		self.assertEqual(self.machine.startCypher("HOLAMUNDONOMEPUEDOCREERQUEES"),"IIBJHPRUMHLNLVTNZRVVYPKNJAXQ")
 
 	def testKFH_longer_sentence(self):
 		self.machine.setKeys("KFH")
@@ -73,15 +77,21 @@ class EnigmaTesting(unittest.TestCase):
 	def test49caracteres(self):
 		self.machine.setKeys("AAA")
 		self.assertEqual(self.machine.startCypher("HOLAMUNDOMELLAMOJOSEMARIAYVOYAPROBARENCUARENTAYNU"),
-                            "IIBGHPRUMVNRETAVGRRPAUKUFLJLQXKJLRFISALOXVMHWNBBX");
+                            "IIBGHPRUMVNRETAVGRRPAUKUFLJLQXKJLRFISALOXVMHWNBBX")
 	def testMuchosCaracteres(self):
 		self.machine.setKeys("AAA")
 		self.assertEqual(self.machine.startCypher("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
-                            "BDZGOWCXLTKSBTMCDLPBMUQOFXYHCXTGYJFLINHNXSHIUNTH");
+                            "BDZGOWCXLTKSBTMCDLPBMUQOFXYHCXTGYJFLINHNXSHIUNTH")
 	def testMuchosCaracteres2(self):
 		self.machine.setKeys("TDB")
 		self.assertEqual(self.machine.startCypher("JDLSIEURJNZMAKFLDPOEUERUNVMNXJDHEYHHHHWJXBSKQUERHBSKJNA"),
-                            "PJECCUVYMVMQGVDZPBIWJGHFHZREWMYIHSCCBIDVGJOTJBFKKCHFPYD");
+                            "PJECCUVYMVMQGVDZPBIWJGHFHZREWMYIHSCCBIDVGJOTJBFKKCHFPYD")
+
+	def testMuchosCaracteres_keyHJD_clavija_BU_JO_DA(self):
+		self.machine.setKeys("HJD")
+		self.machine.setClavijero((["BU"],["JO"],["DA"],))
+		self.assertEqual(self.machine.startCypher("HOLAMUNDOSOYJOSEMARIAYVOYAREALIZARUNAPRUEBACOMPLEJAPARAVERQUELAMQUINASEMUEVEBIEN"),
+							"EUVHBSLSKGGMWCCXOWZTBCDWHKAGYQQHLWLCECIDRGOOECCMTNQEOECNODTZBYBRKHCBCTLWDTRRUSJX")
 
 if __name__ == '__main__':
     unittest.main()
