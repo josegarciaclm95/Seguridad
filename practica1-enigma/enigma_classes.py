@@ -15,8 +15,7 @@ class Rotor:
 
 	def Move(self):
 		"""Logica de movimiento del rotor.
-		Si hemos pasado la posición de salto (o la siguiente a esa en el caso del doble salto)
-		avisamos al siguiente rotor de que se tiene que mover
+		Si hemos pasado la posición de salto avisamos al siguiente rotor de que se tiene que mover
 		"""
 		self.first_index = (self.first_index + 1) % 26
 		pos = Enigma.abc.index(self.jumpChar)
