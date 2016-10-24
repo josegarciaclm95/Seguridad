@@ -56,10 +56,12 @@ class Enigma:
 		(["AZ"],) - se intercambian la A y la Z
 		(["BU"],["JO"],["DA"],) - se intercambian la B y la U, la J y la O y la D y la A
 		"""
+		self.clavijero = "".join(Enigma.abc)
 		if(len(pairs_of_letters[0]) != 0):
 			for pair in pairs_of_letters:
 				x = list(pair[0])
 				self.swap(x[0],x[1])
+		#print(self.clavijero)
 	
 	def swap(self,char1,char2):
 		"""Intercambio de caracteres en el clavijero"""
@@ -77,7 +79,7 @@ class Enigma:
 		"""
 		i = 0
 		move = self.rotors[i].Move() or self.rotors[i+1].first_index == Enigma.abc.index(self.rotors[i+1].jumpChar)
-		while(move and i < len(self.rotors)):
+		while(move and i < len(self.rotors)-1):
 			i += 1
 			move = self.rotors[i].Move()
     
