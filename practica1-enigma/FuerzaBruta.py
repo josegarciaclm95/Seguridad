@@ -44,30 +44,25 @@ machine.appendRotor(rotor2)
 machine.appendRotor(rotor1)
 
 try:
-for KEY in rotorKeys:
-    machine.setKeys(KEY)
-    for CL in letras_clavijero:
-        #print(KEY + " - " + CL)
-        machine.setClavijero(CL)
-        #print(PALABRA_A_DESCIFRAR)
-        resultado = machine.startCypher(PALABRA_A_DESCIFRAR)
-        #print(resultado)
-        palabrasContenida = list(filter(lambda x : x in resultado, diccionario))
-        if len(palabrasContenida) != 0:
-            #print(ctime())
-            #print("Quizas haya algo aqui -> " + resultado + " \n")
-            writeToFile(resultado, KEY, CL, palabrasContenida)
-        palabrasContenida = []
-    if KEY == "MMM":
-        print(KEY + " \n")
+    for KEY in rotorKeys:
+        machine.setKeys(KEY)
+        for CL in letras_clavijero:
+            #print(KEY + " - " + CL)
+            machine.setClavijero(CL)
+            #print(PALABRA_A_DESCIFRAR)
+            resultado = machine.startCypher(PALABRA_A_DESCIFRAR)
+            #print(resultado)
+            palabrasContenida = list(filter(lambda x : x in resultado, diccionario))
+            if len(palabrasContenida) != 0:
+                #print(ctime())
+                #print("Quizas haya algo aqui -> " + resultado + " \n")
+                writeToFile(resultado, KEY, CL, palabrasContenida)
+            palabrasContenida = []
+        if KEY == "MMM":
+            print(KEY + " \n")
 except:
-    print("Fin de bucle -> " + ctime())
+    print("Fin de bucle (interrupcion de teclado) -> " + ctime())
+finally:
     file.write(resultadoDEF)
     print(ctime())
     file.close()
-"""
-print("Fin de bucle -> " + ctime())
-file.write(resultadoDEF)
-print(ctime())
-file.close()
-"""
