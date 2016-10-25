@@ -41,14 +41,33 @@ class Enigma:
 	"""
 	abc = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 	
-	def __init__(self, reflector_letters):
+	def __init__(self, reflector_letters, *changed_letters):
 		self.rotors = []
 		self.reflector = list(reflector_letters)
 		self.clavijero = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-		self.swap_lettes = "AA"
+		if(len(changed_letters) != 0):
+			self.setClavijero(changed_letters)
 
 	def setClavijero(self,pairs_of_letters):
-		self.swap_lettes = pairs_of_letters
+		"""Funcion que configura el clavijero, recive una tupla de listas, conteniendo cada lista la pareja de elementos
+		a intercambiar en el clavijero.
+		Ej de parametros de entrada
+		([],) - clavijero igual que el abecedario
+		(["AZ"],) - se intercambian la A y la Z
+		(["BU"],["JO"],["DA"],) - se intercambian la B y la U, la J y la O y la D y la A
+		"""
+		self.clavijero = "".join(Enigma.abc)
+		if(len(pairs_of_letters[0]) != 0):
+			for pair in pairs_of_letters:
+				x = list(pair[0])
+				self.swap(x[0],x[1])
+		#print(self.clavijero)
+	
+	def swap(self,char1,char2):
+		"""Intercambio de caracteres en el clavijero"""
+		ind1, ind2 = Enigma.abc.index(char1),Enigma.abc.index(char2)
+		self.clavijero = self.clavijero[:ind1] + char2 + self.clavijero[ind1+1:]	
+		self.clavijero = self.clavijero[:ind2] + char1 + self.clavijero[ind2+1:] 
 
 	def appendRotor(self, newRotor):
 		"""Anade un nuevo rotor a la lista. El primer rotor es el III, el segundo es el II y el tercero es el I"""
@@ -74,12 +93,10 @@ class Enigma:
 			self.rotors[i].setKey(k[i])
 	
 	def inClavijero(self,letter_in):
-		if letter_in == self.swap_lettes[0]:
-			return self.swap_lettes[1]
-		if letter_in == self.swap_lettes[1]:
-			return self.swap_lettes[0]
-		else:
-			return letter_in
+		return self.clavijero[Enigma.abc.index(letter_in)]
+	
+	def clavijeroOut(self,letter_out):
+		return Enigma.abc[self.clavijero.index(letter_out)]
 	
 	def startCypher(self,letter_to_cypher):
 		"""Cifrado de cadenas. Pasamos el mensaje a los rotores caracter a caracter y almacenando el resultado en la variable que se 
@@ -94,7 +111,7 @@ class Enigma:
 			aux_letter = self.reflector[Enigma.abc.index(aux_letter)]
 			for r in reversed(self.rotors):
 				aux_letter = r.backCypher(aux_letter)
-			aux_letter = self.inClavijero(aux_letter)
+			aux_letter = self.clavijeroOut(aux_letter)
 			message_cyphered += aux_letter
 		return message_cyphered
 
