@@ -5,9 +5,9 @@ from time import ctime
 
 print(ctime())
 PALABRA_A_DESCIFRAR = "GSUTUBBWAXCANFJPPQRLDQQWDJTSVEXHUDHS"
-#PALABRA_A_DESCIFRAR = "IIBGOCJBYILNVSPV"
+#PALABRA_A_DESCIFRAR = "PIPILNLFFHXFJJSXANEZTVHPFISHWMGF"
 abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-file = open("resultados2.txt","w")
+file = open("resultados3.txt","w")
 rotorKeys = [x + y + z for x in abc for y in abc for z in abc]
 letras_clavijero = [x + y for x in abc for y in abc]
 resultadoDEF = ""
@@ -20,6 +20,8 @@ for x in letras_clavijero:
             letras_clavijero.remove(y)
 #print(letras_clavijero)
 #print(len(letras_clavijero))
+#diccionario = list(map(lambda x: x.upper(),["barbaros"]))
+
 diccionario = list(map(lambda x: x.upper(), ["ambiguo","obvio", "trivial", "estupendo", "esther", "bugzilla", "thevenin", "pacifico", "diarrea", "hola", 
                 "mundo", "garabata", "papiloma", "herpes", "celula", "porro", "suaves", "dimitri", "fiesta", "patata"]))
 
@@ -42,12 +44,13 @@ machine = Enigma("YRUHQSLDPXNGOKMIEBFZCWVJAT")
 machine.appendRotor(rotor3)
 machine.appendRotor(rotor2)
 machine.appendRotor(rotor1)
-
+i = 0
 try:
     for KEY in rotorKeys:
-        machine.setKeys(KEY)
         for CL in letras_clavijero:
+            i += 1
             #print(KEY + " - " + CL)
+            machine.setKeys(KEY)
             machine.setClavijero(CL)
             #print(PALABRA_A_DESCIFRAR)
             resultado = machine.startCypher(PALABRA_A_DESCIFRAR)
@@ -63,6 +66,7 @@ try:
 except:
     print("Fin de bucle (interrupcion de teclado) -> " + ctime())
 finally:
+    print(i)
     file.write(resultadoDEF)
     print(ctime())
     file.close()
