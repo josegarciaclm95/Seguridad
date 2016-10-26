@@ -60,6 +60,7 @@ class Enigma:
 		"""
 		i = 0
 		move = self.rotors[i].Move() or self.rotors[i+1].first_index == Enigma.abc.index(self.rotors[i+1].jumpChar)
+		#move = self.rotors[i].Move()
 		while(move and i < len(self.rotors)-1):
 			i += 1
 			move = self.rotors[i].Move()
