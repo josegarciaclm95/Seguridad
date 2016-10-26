@@ -12,7 +12,7 @@ PALABRA_A_DESCIFRAR = "YLJKKVAWHAQTJITNQUPTJSHDBWGDSBEOWKLEDBYBJSSGCI"
 abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 file = open("resultados" + ctime().replace(" ","_").replace(":","_") + ".txt","w")
-rotorKeys = [x + y + z for x in abc for y in abc for z in abc]
+rotorKeys = [z + y+ x for x in abc for y in abc for z in abc]
 letras_clavijero = [x + y for x in abc for y in abc]
 resultadoDEF = ""
 
@@ -29,8 +29,7 @@ diccionario = list(map(lambda x: x.upper(), ["ambiguo","obvio", "trivial", "estu
 resultadoDEF += "######################################## ROTURA DE ENIGMA POR FUERZA BRUTA ########################################\n"
 resultadoDEF += "Frase a descifrar -> " + PALABRA_A_DESCIFRAR + "\n"
 
-print("######################################## ROTURA DE ENIGMA POR FUERZA BRUTA ########################################\n")
-print("Frase a descifrar -> " + PALABRA_A_DESCIFRAR + "\n")
+print(resultadoDEF)
 
 rotor3 = Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "A","V")
 rotor2 = Rotor("AJDKSIRUXBLHWTMCQGZNPYFVOE", "A","E")
@@ -45,18 +44,14 @@ try:
     for KEY in rotorKeys:
         for CL in letras_clavijero:
             i += 1
-            revKEY = "".join(reversed(KEY))
-            #print(KEY + " - " + CL)
-            machine.setKeys(revKEY)
+            machine.setKeys(KEY)
             machine.setClavijero(CL)
-            #print(PALABRA_A_DESCIFRAR)
             resultado = machine.startCypher(PALABRA_A_DESCIFRAR)
-            #print(resultado)
             palabrasContenida = list(filter(lambda x : x in resultado, diccionario))
             if len(palabrasContenida) != 0:
-                #print(ctime())
-                print("Quizas haya algo aqui -> " + resultado +" , " +  revKEY + " - " + CL + "\n")
-                resultadoDEF += "Decodificacion con key " + revKEY + ", clave " + CL + " ha producido " + resultado + ", que contiene " + ", ".join(palabrasContenida) + "\n"
+                revKey = "".join(reversed(KEY))
+                print("Quizas haya algo aqui -> " + resultado +" , " +  revKey + " - " + CL + "\n")
+                resultadoDEF += "Decodificacion con key " + revKey + ", clave " + CL + " ha producido " + resultado + ", que contiene " + ", ".join(palabrasContenida) + "\n"
             palabrasContenida = []
 except:
     print("Fin de bucle (interrupcion de teclado) -> " + ctime())
