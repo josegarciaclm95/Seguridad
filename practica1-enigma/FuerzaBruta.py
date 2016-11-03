@@ -7,8 +7,10 @@ current_milli_time = lambda: int(round(time() * 1000))
 print(ctime())
 init = current_milli_time()
 
+#Primera palabra - salto normal. Segunda palabra - doble salto
 #PALABRA_A_DESCIFRAR = "GSUTUBBWAXCANFJPPQRLDQQWDJTSVEXHUDHS"
 PALABRA_A_DESCIFRAR = "YLJKKVAWHAQTJITNQUPTJSHDBWGDSBEOWKLEDBYBJSSGCI"
+
 abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 file = open("resultados" + ctime().replace(" ","_").replace(":","_") + ".txt","w")
@@ -25,7 +27,6 @@ for x in letras_clavijero:
 
 diccionario = list(map(lambda x: x.upper(), ["ambiguo","obvio", "trivial", "estupendo", "esther", "bugzilla", "thevenin", "pacifico", "diarrea", "hola", 
                 "mundo", "garabata", "papiloma", "herpes", "celula", "porro", "suaves", "dimitri", "fiesta", "patata"]))
-
 resultadoDEF += "######################################## ROTURA DE ENIGMA POR FUERZA BRUTA ########################################\n"
 resultadoDEF += "Frase a descifrar -> " + PALABRA_A_DESCIFRAR + "\n"
 
