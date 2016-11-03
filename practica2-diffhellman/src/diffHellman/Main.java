@@ -9,8 +9,10 @@ public class Main {
 		//System.out.print(Integer.MAX_VALUE);
 		//System.out.println((long)5/(long)2);
 		//System.out.println(ExponenciacionModular(33,47,1999));
-		System.out.println(Math.pow((double)5,(double)32));
-		System.out.println(ExponenciacionModular(5,117,19));
+		double a = (double)(Math.pow(5,32));
+		a = a % 19;
+		System.out.println(a);
+		//System.out.println(ExponenciacionModular(5,117,19));
 		//System.out.println(new StringBuilder(Long.toBinaryString(117)).reverse().toString());
 		
 	}
