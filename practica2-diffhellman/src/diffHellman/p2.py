@@ -28,8 +28,22 @@ def ataque (n,p, alice, bob, i,j):
 
 # Ejemplo https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
 
-n = int(7245627542842336859)  #65537 #5
-p = int(3523269789483225643)  #1372933 #23
+n = int(7245627542842337021)  #65537 #5
+p = int(3523269789483225697)  #1372933 #23
+xjose = int(2115478207)
+resJose = ExpM(n,xjose,p)
+print('Resultado Jose: %i' % resJose)
+
+xdani = int(7113897121)
+resDani = ExpM(n,xdani,p)
+print('Resultado Dani: %i' % resDani)
+
+resJose_s = ExpM(resDani,xjose,p)
+print('Resultado secreto Jose: %i' % resJose_s)
+
+resDani_s = ExpM(resJose,xdani,p)
+print('Resultado secreto Dani: %i' % resDani_s)
+
 
 '''
 xa = 2930009534032416290
@@ -46,7 +60,7 @@ print('Alice s: %i' % alice_s)
 
 bob_s = ExpM(alice,xb,p)
 print('Bob s: %i' % bob_s)
-'''
+
 
 alice = int(2930009534032416290)#6
 bob = int(6290936979721568605) #15 # Bob el más grande siempre.
@@ -68,3 +82,4 @@ if __name__ == '__main__':
 
 for p in p_list:
     p.start()
+'''
